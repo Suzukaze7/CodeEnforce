@@ -1,0 +1,8 @@
+└── makefile main1:
+	echo 1, 2, 3
+   ├── rule main1:
+
+   │   ├── targets main1
+   │   │   └── word main1
+   │   └── : :
+   └── ERROR 	echo 1, 2, 3

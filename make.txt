@@ -1,0 +1,24 @@
+└── makefile CXX = g++
+main: main.cpp
+	$(CXX) main.cpp -o main
+   ├── variable_assignment CXX = g++
+
+   │   ├── word CXX
+   │   ├── = =
+   │   └── text g++
+   └── rule main: main.cpp
+	$(CXX) main.cpp -o main
+      ├── targets main
+      │   └── word main
+      ├── : :
+      ├── prerequisites main.cpp
+      │   └── word main.cpp
+      └── recipe 
+	$(CXX) main.cpp -o main
+         └── recipe_line $(CXX) main.cpp -o main
+            └── shell_text $(CXX) main.cpp -o main
+               └── variable_reference $(CXX)
+                  ├── $ $
+                  ├── ( (
+                  ├── word CXX
+                  └── ) )

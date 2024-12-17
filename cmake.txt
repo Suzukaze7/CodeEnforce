@@ -1,0 +1,34 @@
+└── source_file 43 set(CMAKE_CXX_FLAGS "1 
+ -DDEBUG")
+
+message(${CMAKE_CXX_FLAGS})
+   ├── normal_command 85 set(CMAKE_CXX_FLAGS "1 
+ -DDEBUG")
+   │   ├── identifier 39 set
+   │   ├── ( 18 (
+   │   ├── argument_list 64 CMAKE_CXX_FLAGS "1 
+ -DDEBUG"
+   │   │   ├── argument 55 CMAKE_CXX_FLAGS
+   │   │   │   └── unquoted_argument 61 CMAKE_CXX_FLAGS
+   │   │   └── argument 55 "1 
+ -DDEBUG"
+   │   │      └── quoted_argument 58 "1 
+ -DDEBUG"
+   │   │         ├── " 20 "
+   │   │         ├── quoted_element 59 1 
+ -DDEBUG
+   │   │         └── " 20 "
+   │   └── ) 19 )
+   └── normal_command 85 message(${CMAKE_CXX_FLAGS})
+      ├── identifier 39 message
+      ├── ( 18 (
+      ├── argument_list 64 ${CMAKE_CXX_FLAGS}
+      │   └── argument 55 ${CMAKE_CXX_FLAGS}
+      │      └── unquoted_argument 61 ${CMAKE_CXX_FLAGS}
+      │         └── variable_ref 48 ${CMAKE_CXX_FLAGS}
+      │            └── normal_var 49 ${CMAKE_CXX_FLAGS}
+      │               ├── $ 8 $
+      │               ├── { 9 {
+      │               ├── variable 47 CMAKE_CXX_FLAGS
+      │               └── } 10 }
+      └── ) 19 )
