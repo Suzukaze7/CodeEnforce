@@ -4,17 +4,17 @@ grammar CMake;
 package org.example.cmake;
 }
 
-cmake: statement* EOF;
+cmake: (statement | ws)* EOF;
 
-statement: IDENTIFY '(' values ')';
+statement: IDENTIFY ws? '(' values? ')';
 
-values: unsquare_value* ;
+values: ws? unsquare_value (ws unsquare_value)* ws?;
 unsquare_value: value | square_value;
 square_value: '(' values ')';
 
 value: string | simple_value;
-string: '"' string_value* '"';
-string_value: (simple_value | '(' | ')' )+;
+string: '"' ws? string_value (ws string_value)* ws? '"';
+string_value: ~(NL | WS | '"')+;
 
 simple_value: (IDENTIFY | VALUE | escape | '$' | '{' | '}')+;
 
@@ -26,6 +26,8 @@ SLASH_ESCAPE: '\\' .;
 IDENTIFY: [a-zA-Z_]+;
 VALUE: ~[ \t\r\n"()$#{}\\]+;
 
-Comment: '#' ~[\r\n]* -> skip;
-WS: [ \t] -> skip;
-NL: ('\r\n' | '\n' | '\r') -> skip;
+ws: (WS | NL)+;
+
+Comment: '#' ~[\r\n]* -> channel(HIDDEN);
+WS: [ \t];
+NL: ('\r\n' | '\n' | '\r');
