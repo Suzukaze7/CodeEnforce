@@ -9,8 +9,8 @@ cmake: (statement | ws)* EOF;
 statement: Identifier ws? '(' arguments? ')';
 
 arguments: ws? argument (ws argument)* ws?;
-argument: unquoted_argument | quoted_argument | squared_argument;
-squared_argument: '(' arguments ')';
+argument: unquoted_argument | quoted_argument | compound_argument;
+compound_argument: '(' arguments ')';
 
 quoted_argument: '"' (ws? quoted_value (ws quoted_value)* ws?)? '"';
 quoted_value: ~(NL | WS | '"')+;
