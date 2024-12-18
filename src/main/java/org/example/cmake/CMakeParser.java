@@ -19,30 +19,32 @@ public class CMakeParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, SLASH_ESCAPE=8, 
-		IDENTIFY=9, VALUE=10, Comment=11, WS=12, NL=13;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, Escape=7, Identifier=8, 
+		Value=9, Comment=10, WS=11, NL=12;
 	public static final int
-		RULE_cmake = 0, RULE_statement = 1, RULE_values = 2, RULE_unsquare_value = 3, 
-		RULE_square_value = 4, RULE_value = 5, RULE_string = 6, RULE_string_value = 7, 
-		RULE_simple_value = 8, RULE_escape = 9, RULE_deref = 10, RULE_slash_escape = 11;
+		RULE_cmake = 0, RULE_statement = 1, RULE_arguments = 2, RULE_argument = 3, 
+		RULE_squared_argument = 4, RULE_quoted_argument = 5, RULE_quoted_value = 6, 
+		RULE_unquoted_argument = 7, RULE_unquoted_argument_part = 8, RULE_deref = 9, 
+		RULE_ws = 10;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"cmake", "statement", "values", "unsquare_value", "square_value", "value", 
-			"string", "string_value", "simple_value", "escape", "deref", "slash_escape"
+			"cmake", "statement", "arguments", "argument", "squared_argument", "quoted_argument", 
+			"quoted_value", "unquoted_argument", "unquoted_argument_part", "deref", 
+			"ws"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'('", "')'", "'\"'", "'$'", "'{'", "'}'", "'${'"
+			null, "'('", "')'", "'\"'", "'$'", "'{'", "'}'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, "SLASH_ESCAPE", "IDENTIFY", 
-			"VALUE", "Comment", "WS", "NL"
+			null, null, null, null, null, null, null, "Escape", "Identifier", "Value", 
+			"Comment", "WS", "NL"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -105,6 +107,12 @@ public class CMakeParser extends Parser {
 		public StatementContext statement(int i) {
 			return getRuleContext(StatementContext.class,i);
 		}
+		public List<WsContext> ws() {
+			return getRuleContexts(WsContext.class);
+		}
+		public WsContext ws(int i) {
+			return getRuleContext(WsContext.class,i);
+		}
 		public CmakeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -131,21 +139,36 @@ public class CMakeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(27);
+			setState(26);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==IDENTIFY) {
-				{
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 6400L) != 0)) {
 				{
 				setState(24);
-				statement();
+				_errHandler.sync(this);
+				switch (_input.LA(1)) {
+				case Identifier:
+					{
+					setState(22);
+					statement();
+					}
+					break;
+				case WS:
+				case NL:
+					{
+					setState(23);
+					ws();
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
 				}
-				setState(29);
+				setState(28);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(30);
+			setState(29);
 			match(EOF);
 			}
 		}
@@ -162,9 +185,12 @@ public class CMakeParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class StatementContext extends ParserRuleContext {
-		public TerminalNode IDENTIFY() { return getToken(CMakeParser.IDENTIFY, 0); }
-		public ValuesContext values() {
-			return getRuleContext(ValuesContext.class,0);
+		public TerminalNode Identifier() { return getToken(CMakeParser.Identifier, 0); }
+		public WsContext ws() {
+			return getRuleContext(WsContext.class,0);
+		}
+		public ArgumentsContext arguments() {
+			return getRuleContext(ArgumentsContext.class,0);
 		}
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -188,16 +214,35 @@ public class CMakeParser extends Parser {
 	public final StatementContext statement() throws RecognitionException {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_statement);
+		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(32);
-			match(IDENTIFY);
+			setState(31);
+			match(Identifier);
 			setState(33);
-			match(T__0);
-			setState(34);
-			values();
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==WS || _la==NL) {
+				{
+				setState(32);
+				ws();
+				}
+			}
+
 			setState(35);
+			match(T__0);
+			setState(37);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 7162L) != 0)) {
+				{
+				setState(36);
+				arguments();
+				}
+			}
+
+			setState(39);
 			match(T__1);
 			}
 		}
@@ -213,53 +258,86 @@ public class CMakeParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class ValuesContext extends ParserRuleContext {
-		public List<Unsquare_valueContext> unsquare_value() {
-			return getRuleContexts(Unsquare_valueContext.class);
+	public static class ArgumentsContext extends ParserRuleContext {
+		public List<ArgumentContext> argument() {
+			return getRuleContexts(ArgumentContext.class);
 		}
-		public Unsquare_valueContext unsquare_value(int i) {
-			return getRuleContext(Unsquare_valueContext.class,i);
+		public ArgumentContext argument(int i) {
+			return getRuleContext(ArgumentContext.class,i);
 		}
-		public ValuesContext(ParserRuleContext parent, int invokingState) {
+		public List<WsContext> ws() {
+			return getRuleContexts(WsContext.class);
+		}
+		public WsContext ws(int i) {
+			return getRuleContext(WsContext.class,i);
+		}
+		public ArgumentsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_values; }
+		@Override public int getRuleIndex() { return RULE_arguments; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterValues(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterArguments(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitValues(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitArguments(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitValues(this);
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitArguments(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final ValuesContext values() throws RecognitionException {
-		ValuesContext _localctx = new ValuesContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_values);
+	public final ArgumentsContext arguments() throws RecognitionException {
+		ArgumentsContext _localctx = new ArgumentsContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_arguments);
 		int _la;
 		try {
+			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(40);
+			setState(42);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2042L) != 0)) {
+			if (_la==WS || _la==NL) {
 				{
-				{
-				setState(37);
-				unsquare_value();
+				setState(41);
+				ws();
 				}
-				}
-				setState(42);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
 			}
+
+			setState(44);
+			argument();
+			setState(50);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+				if ( _alt==1 ) {
+					{
+					{
+					setState(45);
+					ws();
+					setState(46);
+					argument();
+					}
+					} 
+				}
+				setState(52);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
+			}
+			setState(54);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==WS || _la==NL) {
+				{
+				setState(53);
+				ws();
+				}
+			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -274,58 +352,66 @@ public class CMakeParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class Unsquare_valueContext extends ParserRuleContext {
-		public ValueContext value() {
-			return getRuleContext(ValueContext.class,0);
+	public static class ArgumentContext extends ParserRuleContext {
+		public Unquoted_argumentContext unquoted_argument() {
+			return getRuleContext(Unquoted_argumentContext.class,0);
 		}
-		public Square_valueContext square_value() {
-			return getRuleContext(Square_valueContext.class,0);
+		public Quoted_argumentContext quoted_argument() {
+			return getRuleContext(Quoted_argumentContext.class,0);
 		}
-		public Unsquare_valueContext(ParserRuleContext parent, int invokingState) {
+		public Squared_argumentContext squared_argument() {
+			return getRuleContext(Squared_argumentContext.class,0);
+		}
+		public ArgumentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_unsquare_value; }
+		@Override public int getRuleIndex() { return RULE_argument; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterUnsquare_value(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterArgument(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitUnsquare_value(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitArgument(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitUnsquare_value(this);
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitArgument(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Unsquare_valueContext unsquare_value() throws RecognitionException {
-		Unsquare_valueContext _localctx = new Unsquare_valueContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_unsquare_value);
+	public final ArgumentContext argument() throws RecognitionException {
+		ArgumentContext _localctx = new ArgumentContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_argument);
 		try {
-			setState(45);
+			setState(59);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__2:
 			case T__3:
 			case T__4:
 			case T__5:
-			case T__6:
-			case SLASH_ESCAPE:
-			case IDENTIFY:
-			case VALUE:
+			case Escape:
+			case Identifier:
+			case Value:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(43);
-				value();
+				setState(56);
+				unquoted_argument();
+				}
+				break;
+			case T__2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(57);
+				quoted_argument();
 				}
 				break;
 			case T__0:
-				enterOuterAlt(_localctx, 2);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(44);
-				square_value();
+				setState(58);
+				squared_argument();
 				}
 				break;
 			default:
@@ -344,40 +430,40 @@ public class CMakeParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class Square_valueContext extends ParserRuleContext {
-		public ValuesContext values() {
-			return getRuleContext(ValuesContext.class,0);
+	public static class Squared_argumentContext extends ParserRuleContext {
+		public ArgumentsContext arguments() {
+			return getRuleContext(ArgumentsContext.class,0);
 		}
-		public Square_valueContext(ParserRuleContext parent, int invokingState) {
+		public Squared_argumentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_square_value; }
+		@Override public int getRuleIndex() { return RULE_squared_argument; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterSquare_value(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterSquared_argument(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitSquare_value(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitSquared_argument(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitSquare_value(this);
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitSquared_argument(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Square_valueContext square_value() throws RecognitionException {
-		Square_valueContext _localctx = new Square_valueContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_square_value);
+	public final Squared_argumentContext squared_argument() throws RecognitionException {
+		Squared_argumentContext _localctx = new Squared_argumentContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_squared_argument);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(47);
+			setState(61);
 			match(T__0);
-			setState(48);
-			values();
-			setState(49);
+			setState(62);
+			arguments();
+			setState(63);
 			match(T__1);
 			}
 		}
@@ -393,61 +479,98 @@ public class CMakeParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class ValueContext extends ParserRuleContext {
-		public StringContext string() {
-			return getRuleContext(StringContext.class,0);
+	public static class Quoted_argumentContext extends ParserRuleContext {
+		public List<Quoted_valueContext> quoted_value() {
+			return getRuleContexts(Quoted_valueContext.class);
 		}
-		public Simple_valueContext simple_value() {
-			return getRuleContext(Simple_valueContext.class,0);
+		public Quoted_valueContext quoted_value(int i) {
+			return getRuleContext(Quoted_valueContext.class,i);
 		}
-		public ValueContext(ParserRuleContext parent, int invokingState) {
+		public List<WsContext> ws() {
+			return getRuleContexts(WsContext.class);
+		}
+		public WsContext ws(int i) {
+			return getRuleContext(WsContext.class,i);
+		}
+		public Quoted_argumentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_value; }
+		@Override public int getRuleIndex() { return RULE_quoted_argument; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterValue(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterQuoted_argument(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitValue(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitQuoted_argument(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitValue(this);
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitQuoted_argument(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final ValueContext value() throws RecognitionException {
-		ValueContext _localctx = new ValueContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_value);
+	public final Quoted_argumentContext quoted_argument() throws RecognitionException {
+		Quoted_argumentContext _localctx = new Quoted_argumentContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_quoted_argument);
+		int _la;
 		try {
-			setState(53);
+			int _alt;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(65);
+			match(T__2);
+			setState(81);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__2:
-				enterOuterAlt(_localctx, 1);
+			_la = _input.LA(1);
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 8182L) != 0)) {
 				{
-				setState(51);
-				string();
+				setState(67);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==WS || _la==NL) {
+					{
+					setState(66);
+					ws();
+					}
 				}
-				break;
-			case T__3:
-			case T__4:
-			case T__5:
-			case T__6:
-			case SLASH_ESCAPE:
-			case IDENTIFY:
-			case VALUE:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(52);
-				simple_value();
+
+				setState(69);
+				quoted_value();
+				setState(75);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
+				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+					if ( _alt==1 ) {
+						{
+						{
+						setState(70);
+						ws();
+						setState(71);
+						quoted_value();
+						}
+						} 
+					}
+					setState(77);
+					_errHandler.sync(this);
+					_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 				}
-				break;
-			default:
-				throw new NoViableAltException(this);
+				setState(79);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==WS || _la==NL) {
+					{
+					setState(78);
+					ws();
+					}
+				}
+
+				}
+			}
+
+			setState(83);
+			match(T__2);
 			}
 		}
 		catch (RecognitionException re) {
@@ -462,57 +585,63 @@ public class CMakeParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class StringContext extends ParserRuleContext {
-		public List<String_valueContext> string_value() {
-			return getRuleContexts(String_valueContext.class);
+	public static class Quoted_valueContext extends ParserRuleContext {
+		public List<TerminalNode> NL() { return getTokens(CMakeParser.NL); }
+		public TerminalNode NL(int i) {
+			return getToken(CMakeParser.NL, i);
 		}
-		public String_valueContext string_value(int i) {
-			return getRuleContext(String_valueContext.class,i);
+		public List<TerminalNode> WS() { return getTokens(CMakeParser.WS); }
+		public TerminalNode WS(int i) {
+			return getToken(CMakeParser.WS, i);
 		}
-		public StringContext(ParserRuleContext parent, int invokingState) {
+		public Quoted_valueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_string; }
+		@Override public int getRuleIndex() { return RULE_quoted_value; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterString(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterQuoted_value(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitString(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitQuoted_value(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitString(this);
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitQuoted_value(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final StringContext string() throws RecognitionException {
-		StringContext _localctx = new StringContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_string);
+	public final Quoted_valueContext quoted_value() throws RecognitionException {
+		Quoted_valueContext _localctx = new Quoted_valueContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_quoted_value);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(55);
-			match(T__2);
-			setState(59);
+			setState(86); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2038L) != 0)) {
+			do {
 				{
 				{
-				setState(56);
-				string_value();
+				setState(85);
+				_la = _input.LA(1);
+				if ( _la <= 0 || ((((_la) & ~0x3f) == 0 && ((1L << _la) & 6152L) != 0)) ) {
+				_errHandler.recoverInline(this);
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
+					consume();
 				}
 				}
-				setState(61);
+				}
+				setState(88); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
-			setState(62);
-			match(T__2);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 2038L) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -527,262 +656,159 @@ public class CMakeParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class String_valueContext extends ParserRuleContext {
-		public List<Simple_valueContext> simple_value() {
-			return getRuleContexts(Simple_valueContext.class);
+	public static class Unquoted_argumentContext extends ParserRuleContext {
+		public List<DerefContext> deref() {
+			return getRuleContexts(DerefContext.class);
 		}
-		public Simple_valueContext simple_value(int i) {
-			return getRuleContext(Simple_valueContext.class,i);
+		public DerefContext deref(int i) {
+			return getRuleContext(DerefContext.class,i);
 		}
-		public String_valueContext(ParserRuleContext parent, int invokingState) {
+		public List<TerminalNode> Escape() { return getTokens(CMakeParser.Escape); }
+		public TerminalNode Escape(int i) {
+			return getToken(CMakeParser.Escape, i);
+		}
+		public List<Unquoted_argument_partContext> unquoted_argument_part() {
+			return getRuleContexts(Unquoted_argument_partContext.class);
+		}
+		public Unquoted_argument_partContext unquoted_argument_part(int i) {
+			return getRuleContext(Unquoted_argument_partContext.class,i);
+		}
+		public Unquoted_argumentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_string_value; }
+		@Override public int getRuleIndex() { return RULE_unquoted_argument; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterString_value(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterUnquoted_argument(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitString_value(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitUnquoted_argument(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitString_value(this);
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitUnquoted_argument(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final String_valueContext string_value() throws RecognitionException {
-		String_valueContext _localctx = new String_valueContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_string_value);
+	public final Unquoted_argumentContext unquoted_argument() throws RecognitionException {
+		Unquoted_argumentContext _localctx = new Unquoted_argumentContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_unquoted_argument);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(93); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				setState(93);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
+				case 1:
+					{
+					setState(90);
+					deref();
+					}
+					break;
+				case 2:
+					{
+					setState(91);
+					match(Escape);
+					}
+					break;
+				case 3:
+					{
+					setState(92);
+					unquoted_argument_part();
+					}
+					break;
+				}
+				}
+				setState(95); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 1008L) != 0) );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class Unquoted_argument_partContext extends ParserRuleContext {
+		public List<TerminalNode> Value() { return getTokens(CMakeParser.Value); }
+		public TerminalNode Value(int i) {
+			return getToken(CMakeParser.Value, i);
+		}
+		public List<TerminalNode> Identifier() { return getTokens(CMakeParser.Identifier); }
+		public TerminalNode Identifier(int i) {
+			return getToken(CMakeParser.Identifier, i);
+		}
+		public Unquoted_argument_partContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_unquoted_argument_part; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterUnquoted_argument_part(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitUnquoted_argument_part(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitUnquoted_argument_part(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final Unquoted_argument_partContext unquoted_argument_part() throws RecognitionException {
+		Unquoted_argument_partContext _localctx = new Unquoted_argument_partContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_unquoted_argument_part);
+		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(67); 
+			setState(98); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
 				switch (_alt) {
 				case 1:
 					{
-					setState(67);
-					_errHandler.sync(this);
-					switch (_input.LA(1)) {
-					case T__3:
-					case T__4:
-					case T__5:
-					case T__6:
-					case SLASH_ESCAPE:
-					case IDENTIFY:
-					case VALUE:
-						{
-						setState(64);
-						simple_value();
-						}
-						break;
-					case T__0:
-						{
-						setState(65);
-						match(T__0);
-						}
-						break;
-					case T__1:
-						{
-						setState(66);
-						match(T__1);
-						}
-						break;
-					default:
-						throw new NoViableAltException(this);
-					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				setState(69); 
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class Simple_valueContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFY() { return getTokens(CMakeParser.IDENTIFY); }
-		public TerminalNode IDENTIFY(int i) {
-			return getToken(CMakeParser.IDENTIFY, i);
-		}
-		public List<TerminalNode> VALUE() { return getTokens(CMakeParser.VALUE); }
-		public TerminalNode VALUE(int i) {
-			return getToken(CMakeParser.VALUE, i);
-		}
-		public List<EscapeContext> escape() {
-			return getRuleContexts(EscapeContext.class);
-		}
-		public EscapeContext escape(int i) {
-			return getRuleContext(EscapeContext.class,i);
-		}
-		public Simple_valueContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_simple_value; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterSimple_value(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitSimple_value(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitSimple_value(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final Simple_valueContext simple_value() throws RecognitionException {
-		Simple_valueContext _localctx = new Simple_valueContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_simple_value);
-		try {
-			int _alt;
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(77); 
-			_errHandler.sync(this);
-			_alt = 1;
-			do {
-				switch (_alt) {
-				case 1:
 					{
-					setState(77);
-					_errHandler.sync(this);
-					switch (_input.LA(1)) {
-					case IDENTIFY:
-						{
-						setState(71);
-						match(IDENTIFY);
-						}
-						break;
-					case VALUE:
-						{
-						setState(72);
-						match(VALUE);
-						}
-						break;
-					case T__6:
-					case SLASH_ESCAPE:
-						{
-						setState(73);
-						escape();
-						}
-						break;
-					case T__3:
-						{
-						setState(74);
-						match(T__3);
-						}
-						break;
-					case T__4:
-						{
-						setState(75);
-						match(T__4);
-						}
-						break;
-					case T__5:
-						{
-						setState(76);
-						match(T__5);
-						}
-						break;
-					default:
-						throw new NoViableAltException(this);
+					setState(97);
+					_la = _input.LA(1);
+					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 880L) != 0)) ) {
+					_errHandler.recoverInline(this);
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
+						consume();
+					}
 					}
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(79); 
+				setState(100); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class EscapeContext extends ParserRuleContext {
-		public DerefContext deref() {
-			return getRuleContext(DerefContext.class,0);
-		}
-		public Slash_escapeContext slash_escape() {
-			return getRuleContext(Slash_escapeContext.class,0);
-		}
-		public EscapeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_escape; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterEscape(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitEscape(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitEscape(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final EscapeContext escape() throws RecognitionException {
-		EscapeContext _localctx = new EscapeContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_escape);
-		try {
-			setState(83);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__6:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(81);
-				deref();
-				}
-				break;
-			case SLASH_ESCAPE:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(82);
-				slash_escape();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -798,7 +824,7 @@ public class CMakeParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class DerefContext extends ParserRuleContext {
-		public TerminalNode IDENTIFY() { return getToken(CMakeParser.IDENTIFY, 0); }
+		public TerminalNode Identifier() { return getToken(CMakeParser.Identifier, 0); }
 		public DerefContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -820,15 +846,17 @@ public class CMakeParser extends Parser {
 
 	public final DerefContext deref() throws RecognitionException {
 		DerefContext _localctx = new DerefContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_deref);
+		enterRule(_localctx, 18, RULE_deref);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(85);
-			match(T__6);
-			setState(86);
-			match(IDENTIFY);
-			setState(87);
+			setState(102);
+			match(T__3);
+			setState(103);
+			match(T__4);
+			setState(104);
+			match(Identifier);
+			setState(105);
 			match(T__5);
 			}
 		}
@@ -844,35 +872,70 @@ public class CMakeParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class Slash_escapeContext extends ParserRuleContext {
-		public TerminalNode SLASH_ESCAPE() { return getToken(CMakeParser.SLASH_ESCAPE, 0); }
-		public Slash_escapeContext(ParserRuleContext parent, int invokingState) {
+	public static class WsContext extends ParserRuleContext {
+		public List<TerminalNode> WS() { return getTokens(CMakeParser.WS); }
+		public TerminalNode WS(int i) {
+			return getToken(CMakeParser.WS, i);
+		}
+		public List<TerminalNode> NL() { return getTokens(CMakeParser.NL); }
+		public TerminalNode NL(int i) {
+			return getToken(CMakeParser.NL, i);
+		}
+		public WsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_slash_escape; }
+		@Override public int getRuleIndex() { return RULE_ws; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterSlash_escape(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).enterWs(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitSlash_escape(this);
+			if ( listener instanceof CMakeListener ) ((CMakeListener)listener).exitWs(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitSlash_escape(this);
+			if ( visitor instanceof CMakeVisitor ) return ((CMakeVisitor<? extends T>)visitor).visitWs(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final Slash_escapeContext slash_escape() throws RecognitionException {
-		Slash_escapeContext _localctx = new Slash_escapeContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_slash_escape);
+	public final WsContext ws() throws RecognitionException {
+		WsContext _localctx = new WsContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_ws);
+		int _la;
 		try {
+			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89);
-			match(SLASH_ESCAPE);
+			setState(108); 
+			_errHandler.sync(this);
+			_alt = 1;
+			do {
+				switch (_alt) {
+				case 1:
+					{
+					{
+					setState(107);
+					_la = _input.LA(1);
+					if ( !(_la==WS || _la==NL) ) {
+					_errHandler.recoverInline(this);
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
+						consume();
+					}
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				setState(110); 
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
+			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 			}
 		}
 		catch (RecognitionException re) {
@@ -887,58 +950,72 @@ public class CMakeParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\r\\\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\fq\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
-		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0001"+
-		"\u0000\u0005\u0000\u001a\b\u0000\n\u0000\f\u0000\u001d\t\u0000\u0001\u0000"+
-		"\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0002\u0005\u0002\'\b\u0002\n\u0002\f\u0002*\t\u0002\u0001\u0003"+
-		"\u0001\u0003\u0003\u0003.\b\u0003\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0001\u0004\u0001\u0005\u0001\u0005\u0003\u00056\b\u0005\u0001\u0006"+
-		"\u0001\u0006\u0005\u0006:\b\u0006\n\u0006\f\u0006=\t\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0004\u0007D\b\u0007"+
-		"\u000b\u0007\f\u0007E\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b"+
-		"\u0004\bN\b\b\u000b\b\f\bO\u0001\t\u0001\t\u0003\tT\b\t\u0001\n\u0001"+
-		"\n\u0001\n\u0001\n\u0001\u000b\u0001\u000b\u0001\u000b\u0000\u0000\f\u0000"+
-		"\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0000\u0000^\u0000"+
-		"\u001b\u0001\u0000\u0000\u0000\u0002 \u0001\u0000\u0000\u0000\u0004(\u0001"+
-		"\u0000\u0000\u0000\u0006-\u0001\u0000\u0000\u0000\b/\u0001\u0000\u0000"+
-		"\u0000\n5\u0001\u0000\u0000\u0000\f7\u0001\u0000\u0000\u0000\u000eC\u0001"+
-		"\u0000\u0000\u0000\u0010M\u0001\u0000\u0000\u0000\u0012S\u0001\u0000\u0000"+
-		"\u0000\u0014U\u0001\u0000\u0000\u0000\u0016Y\u0001\u0000\u0000\u0000\u0018"+
-		"\u001a\u0003\u0002\u0001\u0000\u0019\u0018\u0001\u0000\u0000\u0000\u001a"+
-		"\u001d\u0001\u0000\u0000\u0000\u001b\u0019\u0001\u0000\u0000\u0000\u001b"+
-		"\u001c\u0001\u0000\u0000\u0000\u001c\u001e\u0001\u0000\u0000\u0000\u001d"+
-		"\u001b\u0001\u0000\u0000\u0000\u001e\u001f\u0005\u0000\u0000\u0001\u001f"+
-		"\u0001\u0001\u0000\u0000\u0000 !\u0005\t\u0000\u0000!\"\u0005\u0001\u0000"+
-		"\u0000\"#\u0003\u0004\u0002\u0000#$\u0005\u0002\u0000\u0000$\u0003\u0001"+
-		"\u0000\u0000\u0000%\'\u0003\u0006\u0003\u0000&%\u0001\u0000\u0000\u0000"+
-		"\'*\u0001\u0000\u0000\u0000(&\u0001\u0000\u0000\u0000()\u0001\u0000\u0000"+
-		"\u0000)\u0005\u0001\u0000\u0000\u0000*(\u0001\u0000\u0000\u0000+.\u0003"+
-		"\n\u0005\u0000,.\u0003\b\u0004\u0000-+\u0001\u0000\u0000\u0000-,\u0001"+
-		"\u0000\u0000\u0000.\u0007\u0001\u0000\u0000\u0000/0\u0005\u0001\u0000"+
-		"\u000001\u0003\u0004\u0002\u000012\u0005\u0002\u0000\u00002\t\u0001\u0000"+
-		"\u0000\u000036\u0003\f\u0006\u000046\u0003\u0010\b\u000053\u0001\u0000"+
-		"\u0000\u000054\u0001\u0000\u0000\u00006\u000b\u0001\u0000\u0000\u0000"+
-		"7;\u0005\u0003\u0000\u00008:\u0003\u000e\u0007\u000098\u0001\u0000\u0000"+
-		"\u0000:=\u0001\u0000\u0000\u0000;9\u0001\u0000\u0000\u0000;<\u0001\u0000"+
-		"\u0000\u0000<>\u0001\u0000\u0000\u0000=;\u0001\u0000\u0000\u0000>?\u0005"+
-		"\u0003\u0000\u0000?\r\u0001\u0000\u0000\u0000@D\u0003\u0010\b\u0000AD"+
-		"\u0005\u0001\u0000\u0000BD\u0005\u0002\u0000\u0000C@\u0001\u0000\u0000"+
-		"\u0000CA\u0001\u0000\u0000\u0000CB\u0001\u0000\u0000\u0000DE\u0001\u0000"+
-		"\u0000\u0000EC\u0001\u0000\u0000\u0000EF\u0001\u0000\u0000\u0000F\u000f"+
-		"\u0001\u0000\u0000\u0000GN\u0005\t\u0000\u0000HN\u0005\n\u0000\u0000I"+
-		"N\u0003\u0012\t\u0000JN\u0005\u0004\u0000\u0000KN\u0005\u0005\u0000\u0000"+
-		"LN\u0005\u0006\u0000\u0000MG\u0001\u0000\u0000\u0000MH\u0001\u0000\u0000"+
-		"\u0000MI\u0001\u0000\u0000\u0000MJ\u0001\u0000\u0000\u0000MK\u0001\u0000"+
-		"\u0000\u0000ML\u0001\u0000\u0000\u0000NO\u0001\u0000\u0000\u0000OM\u0001"+
-		"\u0000\u0000\u0000OP\u0001\u0000\u0000\u0000P\u0011\u0001\u0000\u0000"+
-		"\u0000QT\u0003\u0014\n\u0000RT\u0003\u0016\u000b\u0000SQ\u0001\u0000\u0000"+
-		"\u0000SR\u0001\u0000\u0000\u0000T\u0013\u0001\u0000\u0000\u0000UV\u0005"+
-		"\u0007\u0000\u0000VW\u0005\t\u0000\u0000WX\u0005\u0006\u0000\u0000X\u0015"+
-		"\u0001\u0000\u0000\u0000YZ\u0005\b\u0000\u0000Z\u0017\u0001\u0000\u0000"+
-		"\u0000\n\u001b(-5;CEMOS";
+		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0001\u0000\u0001\u0000\u0005"+
+		"\u0000\u0019\b\u0000\n\u0000\f\u0000\u001c\t\u0000\u0001\u0000\u0001\u0000"+
+		"\u0001\u0001\u0001\u0001\u0003\u0001\"\b\u0001\u0001\u0001\u0001\u0001"+
+		"\u0003\u0001&\b\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0003\u0002"+
+		"+\b\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0005\u0002"+
+		"1\b\u0002\n\u0002\f\u00024\t\u0002\u0001\u0002\u0003\u00027\b\u0002\u0001"+
+		"\u0003\u0001\u0003\u0001\u0003\u0003\u0003<\b\u0003\u0001\u0004\u0001"+
+		"\u0004\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0003\u0005D\b"+
+		"\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0005\u0005J\b"+
+		"\u0005\n\u0005\f\u0005M\t\u0005\u0001\u0005\u0003\u0005P\b\u0005\u0003"+
+		"\u0005R\b\u0005\u0001\u0005\u0001\u0005\u0001\u0006\u0004\u0006W\b\u0006"+
+		"\u000b\u0006\f\u0006X\u0001\u0007\u0001\u0007\u0001\u0007\u0004\u0007"+
+		"^\b\u0007\u000b\u0007\f\u0007_\u0001\b\u0004\bc\b\b\u000b\b\f\bd\u0001"+
+		"\t\u0001\t\u0001\t\u0001\t\u0001\t\u0001\n\u0004\nm\b\n\u000b\n\f\nn\u0001"+
+		"\n\u0000\u0000\u000b\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014"+
+		"\u0000\u0003\u0002\u0000\u0003\u0003\u000b\f\u0002\u0000\u0004\u0006\b"+
+		"\t\u0001\u0000\u000b\fx\u0000\u001a\u0001\u0000\u0000\u0000\u0002\u001f"+
+		"\u0001\u0000\u0000\u0000\u0004*\u0001\u0000\u0000\u0000\u0006;\u0001\u0000"+
+		"\u0000\u0000\b=\u0001\u0000\u0000\u0000\nA\u0001\u0000\u0000\u0000\fV"+
+		"\u0001\u0000\u0000\u0000\u000e]\u0001\u0000\u0000\u0000\u0010b\u0001\u0000"+
+		"\u0000\u0000\u0012f\u0001\u0000\u0000\u0000\u0014l\u0001\u0000\u0000\u0000"+
+		"\u0016\u0019\u0003\u0002\u0001\u0000\u0017\u0019\u0003\u0014\n\u0000\u0018"+
+		"\u0016\u0001\u0000\u0000\u0000\u0018\u0017\u0001\u0000\u0000\u0000\u0019"+
+		"\u001c\u0001\u0000\u0000\u0000\u001a\u0018\u0001\u0000\u0000\u0000\u001a"+
+		"\u001b\u0001\u0000\u0000\u0000\u001b\u001d\u0001\u0000\u0000\u0000\u001c"+
+		"\u001a\u0001\u0000\u0000\u0000\u001d\u001e\u0005\u0000\u0000\u0001\u001e"+
+		"\u0001\u0001\u0000\u0000\u0000\u001f!\u0005\b\u0000\u0000 \"\u0003\u0014"+
+		"\n\u0000! \u0001\u0000\u0000\u0000!\"\u0001\u0000\u0000\u0000\"#\u0001"+
+		"\u0000\u0000\u0000#%\u0005\u0001\u0000\u0000$&\u0003\u0004\u0002\u0000"+
+		"%$\u0001\u0000\u0000\u0000%&\u0001\u0000\u0000\u0000&\'\u0001\u0000\u0000"+
+		"\u0000\'(\u0005\u0002\u0000\u0000(\u0003\u0001\u0000\u0000\u0000)+\u0003"+
+		"\u0014\n\u0000*)\u0001\u0000\u0000\u0000*+\u0001\u0000\u0000\u0000+,\u0001"+
+		"\u0000\u0000\u0000,2\u0003\u0006\u0003\u0000-.\u0003\u0014\n\u0000./\u0003"+
+		"\u0006\u0003\u0000/1\u0001\u0000\u0000\u00000-\u0001\u0000\u0000\u0000"+
+		"14\u0001\u0000\u0000\u000020\u0001\u0000\u0000\u000023\u0001\u0000\u0000"+
+		"\u000036\u0001\u0000\u0000\u000042\u0001\u0000\u0000\u000057\u0003\u0014"+
+		"\n\u000065\u0001\u0000\u0000\u000067\u0001\u0000\u0000\u00007\u0005\u0001"+
+		"\u0000\u0000\u00008<\u0003\u000e\u0007\u00009<\u0003\n\u0005\u0000:<\u0003"+
+		"\b\u0004\u0000;8\u0001\u0000\u0000\u0000;9\u0001\u0000\u0000\u0000;:\u0001"+
+		"\u0000\u0000\u0000<\u0007\u0001\u0000\u0000\u0000=>\u0005\u0001\u0000"+
+		"\u0000>?\u0003\u0004\u0002\u0000?@\u0005\u0002\u0000\u0000@\t\u0001\u0000"+
+		"\u0000\u0000AQ\u0005\u0003\u0000\u0000BD\u0003\u0014\n\u0000CB\u0001\u0000"+
+		"\u0000\u0000CD\u0001\u0000\u0000\u0000DE\u0001\u0000\u0000\u0000EK\u0003"+
+		"\f\u0006\u0000FG\u0003\u0014\n\u0000GH\u0003\f\u0006\u0000HJ\u0001\u0000"+
+		"\u0000\u0000IF\u0001\u0000\u0000\u0000JM\u0001\u0000\u0000\u0000KI\u0001"+
+		"\u0000\u0000\u0000KL\u0001\u0000\u0000\u0000LO\u0001\u0000\u0000\u0000"+
+		"MK\u0001\u0000\u0000\u0000NP\u0003\u0014\n\u0000ON\u0001\u0000\u0000\u0000"+
+		"OP\u0001\u0000\u0000\u0000PR\u0001\u0000\u0000\u0000QC\u0001\u0000\u0000"+
+		"\u0000QR\u0001\u0000\u0000\u0000RS\u0001\u0000\u0000\u0000ST\u0005\u0003"+
+		"\u0000\u0000T\u000b\u0001\u0000\u0000\u0000UW\b\u0000\u0000\u0000VU\u0001"+
+		"\u0000\u0000\u0000WX\u0001\u0000\u0000\u0000XV\u0001\u0000\u0000\u0000"+
+		"XY\u0001\u0000\u0000\u0000Y\r\u0001\u0000\u0000\u0000Z^\u0003\u0012\t"+
+		"\u0000[^\u0005\u0007\u0000\u0000\\^\u0003\u0010\b\u0000]Z\u0001\u0000"+
+		"\u0000\u0000][\u0001\u0000\u0000\u0000]\\\u0001\u0000\u0000\u0000^_\u0001"+
+		"\u0000\u0000\u0000_]\u0001\u0000\u0000\u0000_`\u0001\u0000\u0000\u0000"+
+		"`\u000f\u0001\u0000\u0000\u0000ac\u0007\u0001\u0000\u0000ba\u0001\u0000"+
+		"\u0000\u0000cd\u0001\u0000\u0000\u0000db\u0001\u0000\u0000\u0000de\u0001"+
+		"\u0000\u0000\u0000e\u0011\u0001\u0000\u0000\u0000fg\u0005\u0004\u0000"+
+		"\u0000gh\u0005\u0005\u0000\u0000hi\u0005\b\u0000\u0000ij\u0005\u0006\u0000"+
+		"\u0000j\u0013\u0001\u0000\u0000\u0000km\u0007\u0002\u0000\u0000lk\u0001"+
+		"\u0000\u0000\u0000mn\u0001\u0000\u0000\u0000nl\u0001\u0000\u0000\u0000"+
+		"no\u0001\u0000\u0000\u0000o\u0015\u0001\u0000\u0000\u0000\u0011\u0018"+
+		"\u001a!%*26;CKOQX]_dn";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

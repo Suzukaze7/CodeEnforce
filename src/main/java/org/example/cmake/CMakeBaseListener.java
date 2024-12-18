@@ -43,97 +43,85 @@ public class CMakeBaseListener implements CMakeListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValues(CMakeParser.ValuesContext ctx) { }
+	@Override public void enterArguments(CMakeParser.ArgumentsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValues(CMakeParser.ValuesContext ctx) { }
+	@Override public void exitArguments(CMakeParser.ArgumentsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterUnsquare_value(CMakeParser.Unsquare_valueContext ctx) { }
+	@Override public void enterArgument(CMakeParser.ArgumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitUnsquare_value(CMakeParser.Unsquare_valueContext ctx) { }
+	@Override public void exitArgument(CMakeParser.ArgumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSquare_value(CMakeParser.Square_valueContext ctx) { }
+	@Override public void enterSquared_argument(CMakeParser.Squared_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSquare_value(CMakeParser.Square_valueContext ctx) { }
+	@Override public void exitSquared_argument(CMakeParser.Squared_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterValue(CMakeParser.ValueContext ctx) { }
+	@Override public void enterQuoted_argument(CMakeParser.Quoted_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitValue(CMakeParser.ValueContext ctx) { }
+	@Override public void exitQuoted_argument(CMakeParser.Quoted_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterString(CMakeParser.StringContext ctx) { }
+	@Override public void enterQuoted_value(CMakeParser.Quoted_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitString(CMakeParser.StringContext ctx) { }
+	@Override public void exitQuoted_value(CMakeParser.Quoted_valueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterString_value(CMakeParser.String_valueContext ctx) { }
+	@Override public void enterUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitString_value(CMakeParser.String_valueContext ctx) { }
+	@Override public void exitUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSimple_value(CMakeParser.Simple_valueContext ctx) { }
+	@Override public void enterUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSimple_value(CMakeParser.Simple_valueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEscape(CMakeParser.EscapeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEscape(CMakeParser.EscapeContext ctx) { }
+	@Override public void exitUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -151,13 +139,13 @@ public class CMakeBaseListener implements CMakeListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSlash_escape(CMakeParser.Slash_escapeContext ctx) { }
+	@Override public void enterWs(CMakeParser.WsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSlash_escape(CMakeParser.Slash_escapeContext ctx) { }
+	@Override public void exitWs(CMakeParser.WsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -34,56 +34,49 @@ public class CMakeBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitValues(CMakeParser.ValuesContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArguments(CMakeParser.ArgumentsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitUnsquare_value(CMakeParser.Unsquare_valueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitArgument(CMakeParser.ArgumentContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSquare_value(CMakeParser.Square_valueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitSquared_argument(CMakeParser.Squared_argumentContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitValue(CMakeParser.ValueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitQuoted_argument(CMakeParser.Quoted_argumentContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitString(CMakeParser.StringContext ctx) { return visitChildren(ctx); }
+	@Override public T visitQuoted_value(CMakeParser.Quoted_valueContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitString_value(CMakeParser.String_valueContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSimple_value(CMakeParser.Simple_valueContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitEscape(CMakeParser.EscapeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -97,5 +90,5 @@ public class CMakeBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSlash_escape(CMakeParser.Slash_escapeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitWs(CMakeParser.WsContext ctx) { return visitChildren(ctx); }
 }

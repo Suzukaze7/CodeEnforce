@@ -30,85 +30,75 @@ public interface CMakeListener extends ParseTreeListener {
 	 */
 	void exitStatement(CMakeParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#values}.
+	 * Enter a parse tree produced by {@link CMakeParser#arguments}.
 	 * @param ctx the parse tree
 	 */
-	void enterValues(CMakeParser.ValuesContext ctx);
+	void enterArguments(CMakeParser.ArgumentsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#values}.
+	 * Exit a parse tree produced by {@link CMakeParser#arguments}.
 	 * @param ctx the parse tree
 	 */
-	void exitValues(CMakeParser.ValuesContext ctx);
+	void exitArguments(CMakeParser.ArgumentsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#unsquare_value}.
+	 * Enter a parse tree produced by {@link CMakeParser#argument}.
 	 * @param ctx the parse tree
 	 */
-	void enterUnsquare_value(CMakeParser.Unsquare_valueContext ctx);
+	void enterArgument(CMakeParser.ArgumentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#unsquare_value}.
+	 * Exit a parse tree produced by {@link CMakeParser#argument}.
 	 * @param ctx the parse tree
 	 */
-	void exitUnsquare_value(CMakeParser.Unsquare_valueContext ctx);
+	void exitArgument(CMakeParser.ArgumentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#square_value}.
+	 * Enter a parse tree produced by {@link CMakeParser#squared_argument}.
 	 * @param ctx the parse tree
 	 */
-	void enterSquare_value(CMakeParser.Square_valueContext ctx);
+	void enterSquared_argument(CMakeParser.Squared_argumentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#square_value}.
+	 * Exit a parse tree produced by {@link CMakeParser#squared_argument}.
 	 * @param ctx the parse tree
 	 */
-	void exitSquare_value(CMakeParser.Square_valueContext ctx);
+	void exitSquared_argument(CMakeParser.Squared_argumentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#value}.
+	 * Enter a parse tree produced by {@link CMakeParser#quoted_argument}.
 	 * @param ctx the parse tree
 	 */
-	void enterValue(CMakeParser.ValueContext ctx);
+	void enterQuoted_argument(CMakeParser.Quoted_argumentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#value}.
+	 * Exit a parse tree produced by {@link CMakeParser#quoted_argument}.
 	 * @param ctx the parse tree
 	 */
-	void exitValue(CMakeParser.ValueContext ctx);
+	void exitQuoted_argument(CMakeParser.Quoted_argumentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#string}.
+	 * Enter a parse tree produced by {@link CMakeParser#quoted_value}.
 	 * @param ctx the parse tree
 	 */
-	void enterString(CMakeParser.StringContext ctx);
+	void enterQuoted_value(CMakeParser.Quoted_valueContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#string}.
+	 * Exit a parse tree produced by {@link CMakeParser#quoted_value}.
 	 * @param ctx the parse tree
 	 */
-	void exitString(CMakeParser.StringContext ctx);
+	void exitQuoted_value(CMakeParser.Quoted_valueContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#string_value}.
+	 * Enter a parse tree produced by {@link CMakeParser#unquoted_argument}.
 	 * @param ctx the parse tree
 	 */
-	void enterString_value(CMakeParser.String_valueContext ctx);
+	void enterUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#string_value}.
+	 * Exit a parse tree produced by {@link CMakeParser#unquoted_argument}.
 	 * @param ctx the parse tree
 	 */
-	void exitString_value(CMakeParser.String_valueContext ctx);
+	void exitUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#simple_value}.
+	 * Enter a parse tree produced by {@link CMakeParser#unquoted_argument_part}.
 	 * @param ctx the parse tree
 	 */
-	void enterSimple_value(CMakeParser.Simple_valueContext ctx);
+	void enterUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#simple_value}.
+	 * Exit a parse tree produced by {@link CMakeParser#unquoted_argument_part}.
 	 * @param ctx the parse tree
 	 */
-	void exitSimple_value(CMakeParser.Simple_valueContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CMakeParser#escape}.
-	 * @param ctx the parse tree
-	 */
-	void enterEscape(CMakeParser.EscapeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CMakeParser#escape}.
-	 * @param ctx the parse tree
-	 */
-	void exitEscape(CMakeParser.EscapeContext ctx);
+	void exitUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CMakeParser#deref}.
 	 * @param ctx the parse tree
@@ -120,13 +110,13 @@ public interface CMakeListener extends ParseTreeListener {
 	 */
 	void exitDeref(CMakeParser.DerefContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#slash_escape}.
+	 * Enter a parse tree produced by {@link CMakeParser#ws}.
 	 * @param ctx the parse tree
 	 */
-	void enterSlash_escape(CMakeParser.Slash_escapeContext ctx);
+	void enterWs(CMakeParser.WsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#slash_escape}.
+	 * Exit a parse tree produced by {@link CMakeParser#ws}.
 	 * @param ctx the parse tree
 	 */
-	void exitSlash_escape(CMakeParser.Slash_escapeContext ctx);
+	void exitWs(CMakeParser.WsContext ctx);
 }

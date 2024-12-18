@@ -13,9 +13,7 @@ public class AntlrTest {
 
 	@Test
 	public void testCMake() {
-//		CMake cmake = new CMake("D:\\CodeEnforce\\OpenSource\\libpng\\CMakeLists.txt");
-		CMake cmake = new CMake();
-		cmake.print();
+		CMake cmake = new CMake("open_source\\libpng\\CMakeLists.txt");
 		System.out.println(cmake.getMacros());
 	}
 }

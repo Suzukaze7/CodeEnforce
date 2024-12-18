@@ -6,27 +6,23 @@ package org.example.cmake;
 
 cmake: (statement | ws)* EOF;
 
-statement: IDENTIFY ws? '(' values? ')';
+statement: Identifier ws? '(' arguments? ')';
 
-values: ws? unsquare_value (ws unsquare_value)* ws?;
-unsquare_value: value | square_value;
-square_value: '(' values ')';
+arguments: ws? argument (ws argument)* ws?;
+argument: unquoted_argument | quoted_argument | squared_argument;
+squared_argument: '(' arguments ')';
 
-value: string | simple_value;
-string: '"' ws? string_value (ws string_value)* ws? '"';
-string_value: ~(NL | WS | '"')+;
+quoted_argument: '"' (ws? quoted_value (ws quoted_value)* ws?)? '"';
+quoted_value: ~(NL | WS | '"')+;
+unquoted_argument: (deref | Escape | unquoted_argument_part)+;
+unquoted_argument_part: (Value | Identifier | '$' | '{' | '}')+;
 
-simple_value: (IDENTIFY | VALUE | escape | '$' | '{' | '}')+;
-
-escape: deref | slash_escape;
-deref: '${' IDENTIFY '}';
-slash_escape: SLASH_ESCAPE;
-
-SLASH_ESCAPE: '\\' .;
-IDENTIFY: [a-zA-Z_]+;
-VALUE: ~[ \t\r\n"()$#{}\\]+;
-
+deref: '$' '{' Identifier '}';
 ws: (WS | NL)+;
+
+Escape: '\\' .;
+Identifier: [a-zA-Z_]+;
+Value: ~[ \t\r\n"${}()#\\]+;
 
 Comment: '#' ~[\r\n]* -> channel(HIDDEN);
 WS: [ \t];

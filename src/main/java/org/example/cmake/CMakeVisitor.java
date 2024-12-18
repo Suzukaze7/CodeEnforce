@@ -25,53 +25,47 @@ public interface CMakeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(CMakeParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#values}.
+	 * Visit a parse tree produced by {@link CMakeParser#arguments}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitValues(CMakeParser.ValuesContext ctx);
+	T visitArguments(CMakeParser.ArgumentsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#unsquare_value}.
+	 * Visit a parse tree produced by {@link CMakeParser#argument}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUnsquare_value(CMakeParser.Unsquare_valueContext ctx);
+	T visitArgument(CMakeParser.ArgumentContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#square_value}.
+	 * Visit a parse tree produced by {@link CMakeParser#squared_argument}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSquare_value(CMakeParser.Square_valueContext ctx);
+	T visitSquared_argument(CMakeParser.Squared_argumentContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#value}.
+	 * Visit a parse tree produced by {@link CMakeParser#quoted_argument}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitValue(CMakeParser.ValueContext ctx);
+	T visitQuoted_argument(CMakeParser.Quoted_argumentContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#string}.
+	 * Visit a parse tree produced by {@link CMakeParser#quoted_value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitString(CMakeParser.StringContext ctx);
+	T visitQuoted_value(CMakeParser.Quoted_valueContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#string_value}.
+	 * Visit a parse tree produced by {@link CMakeParser#unquoted_argument}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitString_value(CMakeParser.String_valueContext ctx);
+	T visitUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#simple_value}.
+	 * Visit a parse tree produced by {@link CMakeParser#unquoted_argument_part}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSimple_value(CMakeParser.Simple_valueContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link CMakeParser#escape}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEscape(CMakeParser.EscapeContext ctx);
+	T visitUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CMakeParser#deref}.
 	 * @param ctx the parse tree
@@ -79,9 +73,9 @@ public interface CMakeVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDeref(CMakeParser.DerefContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CMakeParser#slash_escape}.
+	 * Visit a parse tree produced by {@link CMakeParser#ws}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSlash_escape(CMakeParser.Slash_escapeContext ctx);
+	T visitWs(CMakeParser.WsContext ctx);
 }

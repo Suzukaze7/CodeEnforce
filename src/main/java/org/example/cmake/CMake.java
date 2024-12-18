@@ -25,7 +25,7 @@ public class CMake extends SyntaxTree {
 		}
 
 		@Override
-		public Void visitSimple_value(CMakeParser.Simple_valueContext ctx) {
+		public Void visitUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx) {
 			args.add(ctx.getText());
 			return null;
 		}
