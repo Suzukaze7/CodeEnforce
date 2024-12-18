@@ -50,15 +50,15 @@ public interface CMakeListener extends ParseTreeListener {
 	 */
 	void exitArgument(CMakeParser.ArgumentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CMakeParser#squared_argument}.
+	 * Enter a parse tree produced by {@link CMakeParser#compound_argument}.
 	 * @param ctx the parse tree
 	 */
-	void enterSquared_argument(CMakeParser.Squared_argumentContext ctx);
+	void enterCompound_argument(CMakeParser.Compound_argumentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CMakeParser#squared_argument}.
+	 * Exit a parse tree produced by {@link CMakeParser#compound_argument}.
 	 * @param ctx the parse tree
 	 */
-	void exitSquared_argument(CMakeParser.Squared_argumentContext ctx);
+	void exitCompound_argument(CMakeParser.Compound_argumentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CMakeParser#quoted_argument}.
 	 * @param ctx the parse tree
@@ -89,34 +89,4 @@ public interface CMakeListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CMakeParser#unquoted_argument_part}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CMakeParser#unquoted_argument_part}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CMakeParser#deref}.
-	 * @param ctx the parse tree
-	 */
-	void enterDeref(CMakeParser.DerefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CMakeParser#deref}.
-	 * @param ctx the parse tree
-	 */
-	void exitDeref(CMakeParser.DerefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link CMakeParser#ws}.
-	 * @param ctx the parse tree
-	 */
-	void enterWs(CMakeParser.WsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link CMakeParser#ws}.
-	 * @param ctx the parse tree
-	 */
-	void exitWs(CMakeParser.WsContext ctx);
 }

@@ -4,26 +4,22 @@ grammar CMake;
 package org.example.cmake;
 }
 
-cmake: (statement | ws)* EOF;
+cmake: statement* EOF;
 
-statement: Identifier ws? '(' arguments? ')';
+statement: Identifier '(' arguments? ')';
 
-arguments: ws? argument (ws argument)* ws?;
+arguments: argument+;
 argument: unquoted_argument | quoted_argument | compound_argument;
 compound_argument: '(' arguments ')';
 
-quoted_argument: '"' (ws? quoted_value (ws quoted_value)* ws?)? '"';
-quoted_value: ~(NL | WS | '"')+;
-unquoted_argument: (deref | Escape | unquoted_argument_part)+;
-unquoted_argument_part: (Value | Identifier | '$' | '{' | '}')+;
+quoted_argument: '"' quoted_value* '"';
+quoted_value: ~'"'+;
+unquoted_argument: (Value | Identifier)+;
 
-deref: '$' '{' Identifier '}';
-ws: (WS | NL)+;
-
-Escape: '\\' .;
+fragment Escape: '\\' .;
 Identifier: [a-zA-Z_]+;
-Value: ~[ \t\r\n"${}()#\\]+;
+Value: (~[ \t\r\n"()#\\] | Escape)+;
 
 Comment: '#' ~[\r\n]* -> channel(HIDDEN);
-WS: [ \t];
-NL: ('\r\n' | '\n' | '\r');
+WS: [ \t] -> skip;
+NL: ('\r\n' | '\n' | '\r') -> skip;

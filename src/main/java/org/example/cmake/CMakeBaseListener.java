@@ -67,13 +67,13 @@ public class CMakeBaseListener implements CMakeListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSquared_argument(CMakeParser.Squared_argumentContext ctx) { }
+	@Override public void enterCompound_argument(CMakeParser.Compound_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSquared_argument(CMakeParser.Squared_argumentContext ctx) { }
+	@Override public void exitCompound_argument(CMakeParser.Compound_argumentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -110,42 +110,6 @@ public class CMakeBaseListener implements CMakeListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitUnquoted_argument(CMakeParser.Unquoted_argumentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnquoted_argument_part(CMakeParser.Unquoted_argument_partContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterDeref(CMakeParser.DerefContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDeref(CMakeParser.DerefContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterWs(CMakeParser.WsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitWs(CMakeParser.WsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
