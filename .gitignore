@@ -1,7 +1,5 @@
 .idea/
 .xmake/
 build/
-OpenSource/
+open_source/
 target/
-.ninja_log
-tree-sitter-*/

@@ -20,7 +20,6 @@ public class CMake extends SyntaxTree {
 		public Void visitStatement(CMakeParser.StatementContext ctx) {
 			args.clear();
 			visitChildren(ctx);
-			System.out.println(args);
 			matchMacro(args.toArray(new String[0]));
 			return null;
 		}
